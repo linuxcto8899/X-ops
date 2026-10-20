@@ -1,0 +1,103 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ops
+      POSTGRES_USER: ops
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ops_password_change_me}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redisdata:/data
+    restart: unless-stopped
+
+  backend:
+    image: ${IMAGE_NAME:-x-ops-backend}
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    environment:
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-change-me-in-production}
+      DJANGO_DEBUG: "false"
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-*}
+      DB_HOST: db
+      DB_NAME: ops
+      DB_USER: ops
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-ops_password_change_me}
+      REDIS_URL: redis://redis:6379/0
+      XOPS_PUBLIC_URL: ${XOPS_PUBLIC_URL:-http://localhost}
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - media:/app/media
+      - static:/app/staticfiles
+    restart: unless-stopped
+
+  celery:
+    image: ${IMAGE_NAME:-x-ops-backend}
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    command: celery -A ops_platform worker -l info
+    environment:
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-change-me-in-production}
+      DJANGO_DEBUG: "false"
+      DB_HOST: db
+      DB_NAME: ops
+      DB_USER: ops
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-ops_password_change_me}
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - media:/app/media
+    restart: unless-stopped
+
+  celery-beat:
+    image: ${IMAGE_NAME:-x-ops-backend}
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    command: celery -A ops_platform beat -l info
+    environment:
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-change-me-in-production}
+      DJANGO_DEBUG: "false"
+      DB_HOST: db
+      DB_NAME: ops
+      DB_USER: ops
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-ops_password_change_me}
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:1.25-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - static:/static:ro
+      - media:/app/media:ro
+      - ./frontend-dist:/usr/share/nginx/html:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  redisdata:
+  media:
+  static:

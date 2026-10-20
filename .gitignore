@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+db.sqlite3
+.env
+staticfiles/
+media/
+
+# Node
+node_modules/
+dist/
+.esbuild-tmp/
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
