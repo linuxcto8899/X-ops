@@ -71,7 +71,7 @@
     </a-tabs>
 
     <!-- 发信配置弹窗 -->
-    <a-modal v-model:open="channelModal" :title="channelForm.id ? '编辑发信配置' : '新增发信配置'" @ok="saveChannel" :confirm-loading="saving" :width="520">
+    <a-modal v-model:open="channelModal" :title="channelForm.id ? '编辑发信配置' : '新增发信配置'" @ok="saveChannel" :confirm-loading="saving" :width="modalW" centered :body-style="{maxHeight:'75vh', overflowY:'auto'}">
       <a-form layout="vertical">
         <a-form-item label="名称" required><a-input v-model:value="channelForm.name" /></a-form-item>
         <a-form-item label="渠道类型" required>
@@ -107,7 +107,7 @@
     </a-modal>
 
     <!-- 测试发送弹窗 -->
-    <a-modal v-model:open="testModal" :title="`测试发送 - ${testChannel?.name||''}`" @ok="doTest" :confirm-loading="testing" :width="480">
+    <a-modal v-model:open="testModal" :title="`测试发送 - ${testChannel?.name||''}`" @ok="doTest" :confirm-loading="testing" :width="modalW" centered>
       <a-form layout="vertical">
         <a-form-item label="标题"><a-input v-model:value="testForm.title" /></a-form-item>
         <a-form-item label="内容"><a-textarea v-model:value="testForm.content" :rows="4" /></a-form-item>
@@ -117,7 +117,7 @@
     </a-modal>
 
     <!-- 联系人弹窗 -->
-    <a-modal v-model:open="contactModal" :title="contactForm.id ? '编辑联系人' : '新增联系人'" @ok="saveContact" :confirm-loading="saving" :width="520">
+    <a-modal v-model:open="contactModal" :title="contactForm.id ? '编辑联系人' : '新增联系人'" @ok="saveContact" :confirm-loading="saving" :width="modalW" centered :body-style="{maxHeight:'75vh', overflowY:'auto'}">
       <a-form layout="vertical">
         <a-form-item label="名称" required><a-input v-model:value="contactForm.name" /></a-form-item>
         <a-form-item label="邮箱"><a-input v-model:value="contactForm.channels.email" placeholder="接收报警邮件" /></a-form-item>
@@ -144,7 +144,7 @@
       </a-form>
     </a-modal>
 
-    <a-modal v-model:open="groupModal" :title="groupForm.id ? '编辑通知组' : '新增通知组'" @ok="saveGroup" :confirm-loading="saving">
+    <a-modal v-model:open="groupModal" :title="groupForm.id ? '编辑通知组' : '新增通知组'" @ok="saveGroup" :confirm-loading="saving" :width="modalW" centered>
       <a-form layout="vertical">
         <a-form-item label="名称" required><a-input v-model:value="groupForm.name" /></a-form-item>
         <a-form-item label="联系人">
@@ -163,9 +163,11 @@ import { message } from 'ant-design-vue'
 import api from '../api'
 import { useAppStore } from '../store'
 import locales from '../locales'
+import { useModalWidth } from '../useModalWidth'
 
 const store = useAppStore()
 const t = computed(() => locales[store.lang])
+const { modalW } = useModalWidth()
 const alerts = ref([])
 const contacts = ref([])
 const groups = ref([])

@@ -80,9 +80,11 @@ import { message } from 'ant-design-vue'
 import api from '../api'
 import { useAppStore } from '../store'
 import locales from '../locales'
+import { useModalWidth } from '../useModalWidth'
 
 const store = useAppStore()
 const t = computed(() => locales[store.lang])
+const { modalW } = useModalWidth()
 const hosts = ref([])
 const tasks = ref([])
 const loading = ref(false)
@@ -90,12 +92,6 @@ const modalOpen = ref(false)
 const editing = ref(false)
 const saving = ref(false)
 const form = ref({})
-
-// 弹窗自适应宽度：跟随屏幕宽度，最大 680
-const modalW = computed(() => {
-  const w = window.innerWidth || 1024
-  return Math.min(680, Math.max(420, w - 48))
-})
 
 onMounted(async () => {
   try { hosts.value = (await api.get('/hosts/hosts/?page_size=200')).results || [] } catch (e) {}

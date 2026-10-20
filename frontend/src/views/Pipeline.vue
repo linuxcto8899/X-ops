@@ -32,7 +32,7 @@
       </a-tab-pane>
     </a-tabs>
 
-    <a-modal v-model:open="modalOpen" :title="editing ? '编辑流水线' : '新建流水线'" @ok="save" :confirm-loading="saving" width="720">
+    <a-modal v-model:open="modalOpen" :title="editing ? '编辑流水线' : '新建流水线'" @ok="save" :confirm-loading="saving" :width="modalW" centered :body-style="{maxHeight:'75vh', overflowY:'auto'}">
       <a-form layout="vertical">
         <a-form-item label="名称" required><a-input v-model:value="form.name" /></a-form-item>
         <a-form-item label="描述"><a-input v-model:value="form.description" /></a-form-item>
@@ -79,9 +79,11 @@ import { message } from 'ant-design-vue'
 import api from '../api'
 import { useAppStore } from '../store'
 import locales from '../locales'
+import { useModalWidth } from '../useModalWidth'
 
 const store = useAppStore()
 const t = computed(() => locales[store.lang])
+const { modalW } = useModalWidth(480, 860)
 const hosts = ref([])
 const pipelines = ref([])
 const runs = ref([])

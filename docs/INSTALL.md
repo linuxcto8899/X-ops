@@ -230,7 +230,22 @@ certbot --nginx -d 你的域名 --non-interactive --agree-tos --register-unsafel
 
 ---
 
-## 四、报警中心发信配置
+## 四、Docker 管理
+
+登录后进入 **Docker 管理**：
+
+1. 顶部选择要管理的主机（需已安装 Docker 且服务运行）
+2. **概览**：Docker 版本、容器/镜像/网络/卷统计、引擎信息
+3. **容器**：查看全部/运行中/已停止，支持 启动/停止/重启/暂停/恢复/删除，可查看实时日志（最近 300 行）
+4. **镜像**：查看仓库/标签/大小，可删除镜像
+5. **网络**：查看网络列表（bridge/host 等）
+
+> 服务器安装 Docker：`apt install -y docker.io && systemctl enable --now docker`
+> 国内加速：在 `/etc/docker/daemon.json` 配置 `registry-mirrors` 后 `systemctl restart docker`
+
+---
+
+## 五、报警中心发信配置
 
 登录后进入 **报警中心 → 发信配置**：
 
@@ -242,33 +257,33 @@ certbot --nginx -d 你的域名 --non-interactive --agree-tos --register-unsafel
 
 ---
 
-## 五、界面截图
+## 六、界面截图
 
 部署完成后，登录即可看到以下主要界面：
 
-### 5.1 登录页 / 仪表盘
+### 6.1 登录页 / 仪表盘
 
 ![登录与仪表盘](images/1.png)
 
-### 5.2 主机管理
+### 6.2 主机管理
 
 ![主机管理](images/2.png)
 
-### 5.3 主机监控
+### 6.3 主机监控
 
 ![主机监控](images/3.png)
 
-### 5.4 批量执行
+### 6.4 批量执行
 
 ![批量执行](images/4.png)
 
-### 5.5 报警中心
+### 6.5 报警中心
 
 ![报警中心](images/5.png)
 
 ---
 
-## 六、常见问题
+## 七、常见问题
 
 | 问题 | 解决 |
 |------|------|

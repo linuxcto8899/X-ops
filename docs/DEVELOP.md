@@ -77,6 +77,9 @@ backend/
 │   └── models.py          # Execution / ExecutionResult / ExecutionStream
 ├── terminal/              # 在线终端
 │   └── consumers.py       # WebSocket：SSH shell 桥接
+├── docker/                # Docker 管理
+│   ├── docker_ops.py      # SSH 执行 docker CLI：容器/镜像/网络/日志/操作
+│   └── views.py           # REST API（无模型，纯命令封装）
 ├── files/                 # 文件管理 / 分发（SFTP）
 ├── deploy/                # 应用发布（Git 构建/发布/回滚/Webhook）
 ├── pipeline/              # 流水线编排
@@ -168,6 +171,7 @@ python manage.py startapp myapp
 | 主机 | `/api/hosts/` | hosts / groups / credentials |
 | 执行 | `/api/exec/` | templates / executions / streams |
 | 文件 | `/api/files/` | uploads / transfers / host/* |
+| Docker | `/api/docker/` | host/*/info · containers · logs · start/stop/restart/pause/remove · images · networks |
 | 发布 | `/api/deploy/` | apps / repositories / releases / webhook |
 | 流水线 | `/api/pipeline/` | pipelines / runs |
 | 监控 | `/api/monitor/` | rules / records / alerts / channels / host/* |

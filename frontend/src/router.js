@@ -13,6 +13,7 @@ const routes = [
       { path: 'host-monitor/:id?', name: 'hostMonitor', component: () => import('./views/HostMonitor.vue') },
       { path: 'exec', name: 'exec', component: () => import('./views/Exec.vue') },
       { path: 'terminal/:id?', name: 'terminal', component: () => import('./views/Terminal.vue') },
+      { path: 'docker', name: 'docker', component: () => import('./views/Docker.vue') },
       { path: 'files', name: 'files', component: () => import('./views/Files.vue') },
       { path: 'transfer', name: 'transfer', component: () => import('./views/Transfer.vue') },
       { path: 'deploy', name: 'deploy', component: () => import('./views/Deploy.vue') },

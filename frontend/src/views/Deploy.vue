@@ -33,7 +33,7 @@
       </a-tab-pane>
     </a-tabs>
 
-    <a-modal v-model:open="modalOpen" :title="editing ? '编辑应用' : '新建应用'" @ok="saveApp" :confirm-loading="saving" width="640">
+    <a-modal v-model:open="modalOpen" :title="editing ? '编辑应用' : '新建应用'" @ok="saveApp" :confirm-loading="saving" :width="modalW" centered :body-style="{maxHeight:'75vh', overflowY:'auto'}">
       <a-form layout="vertical">
         <a-form-item label="名称" required><a-input v-model:value="form.name" /></a-form-item>
         <a-form-item label="模式">
@@ -66,7 +66,7 @@
       </a-form>
     </a-modal>
 
-    <a-modal v-model:open="releaseModal" title="发起发布" @ok="doRelease" :confirm-loading="releasing">
+    <a-modal v-model:open="releaseModal" title="发起发布" @ok="doRelease" :confirm-loading="releasing" :width="modalW" centered>
       <a-form layout="vertical">
         <a-form-item label="版本"><a-input v-model:value="releaseForm.version" placeholder="如 v1.0.0" /></a-form-item>
         <a-form-item label="定时发布"><a-date-picker show-time v-model:value="releaseForm.schedule_at" style="width:100%" /></a-form-item>
@@ -82,9 +82,11 @@ import { message } from 'ant-design-vue'
 import api from '../api'
 import { useAppStore } from '../store'
 import locales from '../locales'
+import { useModalWidth } from '../useModalWidth'
 
 const store = useAppStore()
 const t = computed(() => locales[store.lang])
+const { modalW } = useModalWidth()
 const hosts = ref([])
 const apps = ref([])
 const releases = ref([])

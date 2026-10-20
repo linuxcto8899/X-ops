@@ -8,6 +8,7 @@
         <a-menu-item key="host-monitor"><template #icon><LineChartOutlined /></template>{{ t.hostMonitor }}</a-menu-item>
         <a-menu-item key="exec"><template #icon><PlayCircleOutlined /></template>{{ t.exec }}</a-menu-item>
         <a-menu-item key="terminal"><template #icon><ConsoleSqlOutlined /></template>{{ t.terminal }}</a-menu-item>
+        <a-menu-item key="docker"><template #icon><DeploymentUnitOutlined /></template>{{ t.docker }}</a-menu-item>
         <a-menu-item key="files"><template #icon><FolderOutlined /></template>{{ t.files }}</a-menu-item>
         <a-menu-item key="transfer"><template #icon><SendOutlined /></template>{{ t.transfer }}</a-menu-item>
         <a-menu-item key="deploy"><template #icon><RocketOutlined /></template>{{ t.deploy }}</a-menu-item>
@@ -51,7 +52,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { DashboardOutlined, DesktopOutlined, LineChartOutlined, PlayCircleOutlined, ConsoleSqlOutlined, FolderOutlined, SendOutlined, RocketOutlined, ApartmentOutlined, FieldTimeOutlined, SettingOutlined, AlertOutlined, BellOutlined, KeyOutlined, TeamOutlined, SafetyOutlined } from '@ant-design/icons-vue'
+import { DashboardOutlined, DesktopOutlined, LineChartOutlined, PlayCircleOutlined, ConsoleSqlOutlined, DeploymentUnitOutlined, FolderOutlined, SendOutlined, RocketOutlined, ApartmentOutlined, FieldTimeOutlined, SettingOutlined, AlertOutlined, BellOutlined, KeyOutlined, TeamOutlined, SafetyOutlined } from '@ant-design/icons-vue'
 import { useAppStore } from '../store'
 import locales from '../locales'
 

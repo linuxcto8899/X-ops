@@ -25,5 +25,6 @@ urlpatterns = [
     path('api/monitor/', include('monitor.urls')),
     path('api/scheduler/', include('scheduler.urls')),
     path('api/config/', include('config_center.urls')),
+    path('api/docker/', include('docker.urls')),
     path('api/', include(router.urls)),
 ]

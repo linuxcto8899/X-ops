@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'scheduler',
     'config_center',
     'terminal',
+    'docker',
 ]
 
 MIDDLEWARE = [

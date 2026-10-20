@@ -121,7 +121,7 @@
     </a-modal>
 
     <!-- 分组管理 -->
-    <a-modal v-model:open="groupsModal" title="分组管理" :footer="null" width="480">
+    <a-modal v-model:open="groupsModal" title="分组管理" :footer="null" :width="modalW" centered>
       <div class="mb16">
         <a-input-group compact>
           <a-input v-model:value="newGroup" placeholder="新分组名称" style="width:70%" />
@@ -148,10 +148,12 @@ import api from '../api'
 import { useAppStore } from '../store'
 import locales from '../locales'
 import { countryFlag, regionToFlag, regionFlagImg, CLOUD_PROVIDERS } from '../flags'
+import { useModalWidth } from '../useModalWidth'
 
 const store = useAppStore()
 const router = useRouter()
 const t = computed(() => locales[store.lang])
+const { modalW } = useModalWidth()
 const hosts = ref([])
 const groups = ref([])
 const loading = ref(false)
@@ -163,12 +165,6 @@ const newGroup = ref('')
 const filterGroup = ref(null)
 const searchText = ref('')
 const form = ref({})
-
-// 弹窗自适应宽度：跟随屏幕宽度，最大 720
-const modalW = computed(() => {
-  const w = window.innerWidth || 1024
-  return Math.min(720, Math.max(420, w - 48))
-})
 
 function countryFlag2(c) { return countryFlag(c) }
 function regionFlag(rec) { return regionToFlag(rec.region, rec.region_code) }

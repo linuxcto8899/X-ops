@@ -18,7 +18,7 @@
       </template></a-table-column>
     </a-table>
 
-    <a-modal v-model:open="modalOpen" :title="editing ? '编辑用户' : '新增用户'" @ok="save" :confirm-loading="saving">
+    <a-modal v-model:open="modalOpen" :title="editing ? '编辑用户' : '新增用户'" @ok="save" :confirm-loading="saving" :width="modalW" centered :body-style="{maxHeight:'75vh', overflowY:'auto'}">
       <a-form layout="vertical">
         <a-form-item label="用户名" required><a-input v-model:value="form.username" /></a-form-item>
         <a-form-item v-if="!editing" label="密码"><a-input-password v-model:value="form.password" /></a-form-item>
@@ -42,9 +42,11 @@ import { message } from 'ant-design-vue'
 import api from '../api'
 import { useAppStore } from '../store'
 import locales from '../locales'
+import { useModalWidth } from '../useModalWidth'
 
 const store = useAppStore()
 const t = computed(() => locales[store.lang])
+const { modalW } = useModalWidth()
 const users = ref([])
 const loading = ref(false)
 const modalOpen = ref(false)
